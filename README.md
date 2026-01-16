@@ -2,7 +2,8 @@
 
 An interactive visualization of global earthquake data powered by BigQuery, DuckDB-WASM, and SQLRooms. This app demonstrates how to build data-intensive applications that query BigQuery and perform client-side analytics with Mosaic cross-filtering.
 
-![Earthquake Visualization](https://user-images.githubusercontent.com/placeholder/earthquake-map.png)
+<img width="1065" height="620" alt="image" src="https://github.com/user-attachments/assets/38a303f3-24ac-4c46-bdc3-51a57219f4e9" />
+
 
 ## Features
 
