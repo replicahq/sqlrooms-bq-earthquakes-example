@@ -60,24 +60,24 @@ npm run dev
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        Browser                               │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │   DeckGL    │  │   Mosaic    │  │    DuckDB-WASM      │ │
-│  │  Map View   │◄─┤   Charts    │◄─┤   (Arrow Tables)    │ │
-│  └─────────────┘  └─────────────┘  └──────────▲──────────┘ │
+│                       Browser                               │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   DeckGL    │  │   Mosaic    │  │    DuckDB-WASM      │  │
+│  │  Map View   │◄─┤   Charts    │◄─┤   (Arrow Tables)    │  │
+│  └─────────────┘  └─────────────┘  └──────────▲──────────┘  │
 └───────────────────────────────────────────────┼─────────────┘
                                                 │ Arrow IPC
 ┌───────────────────────────────────────────────┼─────────────┐
 │                    Express Server             │             │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │              @sqlrooms/bigquery                      │   │
-│  │   BigQueryClient → rowsToArrowIPC → base64          │   │
-│  └─────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              @sqlrooms/bigquery                     │    │
+│  │   BigQueryClient → rowsToArrowIPC → base64          │    │
+│  └─────────────────────────────────────────────────────┘    │
 └───────────────────────────────────────────────┼─────────────┘
                                                 │
 ┌───────────────────────────────────────────────▼─────────────┐
 │                    Google BigQuery                          │
-│   bigquery-public-data.noaa_significant_earthquakes        │
+│   bigquery-public-data.noaa_significant_earthquakes         │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -109,7 +109,7 @@ This app queries the [NOAA Significant Earthquakes Database](https://console.clo
 
 ## Key Dependencies
 
-- **[@sqlrooms/bigquery](https://github.com/replicahq/sqlrooms-bigquery)** - BigQuery utilities
+- **[@sqlrooms/bigquery](https://github.com/replicahq/sqlrooms-bigquery)** - BigQuery utilities (install via `npm install github:replicahq/sqlrooms-bigquery`)
 - **[@sqlrooms/mosaic](https://github.com/sqlrooms/sqlrooms)** - Cross-filtering with Mosaic
 - **[@sqlrooms/duckdb](https://github.com/sqlrooms/sqlrooms)** - DuckDB-WASM integration
 - **[@geoarrow/deck.gl-layers](https://github.com/geoarrow/deck.gl-layers)** - GeoArrow rendering
