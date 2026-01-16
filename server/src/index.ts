@@ -15,8 +15,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Initialize BigQuery client
+// IMPORTANT: projectId must be YOUR billing-enabled project, not bigquery-public-data
+// You can still query public datasets - the projectId is where the job runs
 const bigQueryClient = new BigQueryClient({
-  projectId: process.env.BIGQUERY_PROJECT || 'bigquery-public-data',
+  projectId: process.env.BIGQUERY_PROJECT || 'model-159019',
 });
 
 // Create generic BigQuery router for ad-hoc queries

@@ -14,12 +14,12 @@ export const MainView = () => {
   const meta = useRoomStore((state) => state.earthquakes.meta);
   const loadData = useRoomStore((state) => state.earthquakes.loadData);
 
-  // Auto-load data when DuckDB is ready
+  // Auto-load data when DuckDB is ready (only once, don't retry on error)
   useEffect(() => {
-    if (mosaicConn.status === 'ready' && !isTableReady && !isLoading && !meta) {
+    if (mosaicConn.status === 'ready' && !isTableReady && !isLoading && !meta && !error) {
       loadData();
     }
-  }, [mosaicConn.status, isTableReady, isLoading, meta, loadData]);
+  }, [mosaicConn.status, isTableReady, isLoading, meta, error, loadData]);
 
   if (mosaicConn.status === 'loading') {
     return <SpinnerPane className="h-full w-full" />;
