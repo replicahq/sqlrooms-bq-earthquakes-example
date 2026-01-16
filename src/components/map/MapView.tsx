@@ -71,7 +71,7 @@ export default function MapView({ className }: { className?: string }) {
     selectionName: 'brush',
     query: (filter: any) => {
       return Query.from('earthquakes')
-        .select('Latitude', 'Longitude', 'Magnitude', 'Depth', 'DateTime')
+        .select('latitude', 'longitude', 'magnitude', 'depth', 'datetime')
         .where(filter);
     },
   });
@@ -80,11 +80,11 @@ export default function MapView({ className }: { className?: string }) {
   const data = useMemo(() => {
     if (!rawData) return null;
     return buildGeoArrowPointTable(
-      rawData.getChild('Latitude'),
-      rawData.getChild('Longitude'),
-      rawData.getChild('Magnitude'),
-      rawData.getChild('Depth'),
-      rawData.getChild('DateTime'),
+      rawData.getChild('latitude'),
+      rawData.getChild('longitude'),
+      rawData.getChild('magnitude'),
+      rawData.getChild('depth'),
+      rawData.getChild('datetime'),
     );
   }, [rawData]);
 
@@ -103,8 +103,8 @@ export default function MapView({ className }: { className?: string }) {
     const radiusSq = brushRadius * brushRadius;
 
     const predicate = sql`(
-      pow((Longitude - ${lon}) * ${cosLat * metersPerDeg}, 2) +
-      pow((Latitude - ${lat}) * ${metersPerDeg}, 2)
+      pow((longitude - ${lon}) * ${cosLat * metersPerDeg}, 2) +
+      pow((latitude - ${lat}) * ${metersPerDeg}, 2)
     ) < ${radiusSq}`;
 
     brush.update({
@@ -147,7 +147,7 @@ export default function MapView({ className }: { className?: string }) {
       getPosition: data.getChild('geom')!,
       getFillColor: ({ index, data }) => {
         const batch = data.data;
-        const mag = batch.getChild('Magnitude')?.get(index) ?? 0;
+        const mag = batch.getChild('magnitude')?.get(index) ?? 0;
         if (mag >= 8.0) return [139, 0, 0, 220];
         if (mag >= 7.0) return [199, 91, 74, 200];
         if (mag >= 6.0) return [220, 110, 88, 190];
@@ -157,7 +157,7 @@ export default function MapView({ className }: { className?: string }) {
       },
       getRadius: ({ index, data }) => {
         const batch = data.data;
-        const mag = batch.getChild('Magnitude')?.get(index) ?? 0;
+        const mag = batch.getChild('magnitude')?.get(index) ?? 0;
         return mag * mag;
       },
       radiusScale: getZoomFactor({ zoom: viewState.zoom }),
@@ -186,9 +186,9 @@ export default function MapView({ className }: { className?: string }) {
             !enableBrushing &&
             object && {
               html: `<div style="font-family:system-ui; font-size:12px; padding:4px;">
-                  <strong>M ${Number(object.Magnitude).toFixed(1)}</strong><br/>
-                  Depth: ${object.Depth}km<br/>
-                  ${new Date(Number(object.DateTime)).toLocaleDateString()}
+                  <strong>M ${Number(object.magnitude).toFixed(1)}</strong><br/>
+                  Depth: ${object.depth}km<br/>
+                  ${new Date(Number(object.datetime)).toLocaleDateString()}
                 </div>`,
             }
           }

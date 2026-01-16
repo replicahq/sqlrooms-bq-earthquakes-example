@@ -38,9 +38,9 @@ export function buildGeoArrowPointTable(
   const dateCol = vectorFromArray(dates);
 
   return new Table({
-    Magnitude: magCol,
-    Depth: depthCol,
-    DateTime: dateCol,
+    magnitude: magCol,
+    depth: depthCol,
+    datetime: dateCol,
     geom: geomCol,
   });
 }

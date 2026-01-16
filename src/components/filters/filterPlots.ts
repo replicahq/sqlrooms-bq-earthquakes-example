@@ -6,13 +6,13 @@ const foregroundColor = '#e67f5f';
 export const createMagPlot = (brush: Selection) =>
   vg.plot(
     vg.rectY(vg.from('earthquakes'), {
-      x: vg.bin('Magnitude', { maxbins: 25 }),
+      x: vg.bin('magnitude', { maxbins: 25 }),
       y: vg.count(),
       fill: backgroundColor,
       inset: 0.5,
     }),
     vg.rectY(vg.from('earthquakes', { filterBy: brush }), {
-      x: vg.bin('Magnitude', { maxbins: 25 }),
+      x: vg.bin('magnitude', { maxbins: 25 }),
       y: vg.count(),
       fill: foregroundColor,
       inset: 0.5,
@@ -29,8 +29,8 @@ export const createMagPlot = (brush: Selection) =>
 export const createDepthPlot = (brush: Selection) =>
   vg.plot(
     vg.raster(vg.from('earthquakes', { filterBy: brush }), {
-      x: 'Magnitude',
-      y: 'Depth',
+      x: 'magnitude',
+      y: 'depth',
       fill: 'density',
       bandwidth: 0,
       pixelSize: 3,
@@ -49,13 +49,13 @@ export const createDepthPlot = (brush: Selection) =>
 export const createTimePlot = (brush: Selection) =>
   vg.plot(
     vg.rectY(vg.from('earthquakes'), {
-      x: vg.bin('DateTime', { maxbins: 40 }),
+      x: vg.bin('datetime', { maxbins: 40 }),
       y: vg.count(),
       fill: backgroundColor,
       inset: 0.5,
     }),
     vg.rectY(vg.from('earthquakes', { filterBy: brush }), {
-      x: vg.bin('DateTime', { maxbins: 40 }),
+      x: vg.bin('datetime', { maxbins: 40 }),
       y: vg.count(),
       fill: foregroundColor,
       inset: 0.5,

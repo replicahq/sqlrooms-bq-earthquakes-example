@@ -44,19 +44,21 @@ app.post('/api/earthquakes/load', async (req, res, next) => {
     const startTime = Date.now();
 
     // Query the public earthquakes dataset
-    // Map columns to match the expected schema from the original example
+    // Use lowercase column names for DuckDB compatibility
+    // Schema: latitude, longitude, eq_primary (magnitude), focal_depth, year/month/day/hour/minute/second
     const result = await bigQueryClient.query(`
       SELECT
-        latitude AS Latitude,
-        longitude AS Longitude,
-        CAST(magnitude AS FLOAT64) AS Magnitude,
-        CAST(depth AS FLOAT64) AS Depth,
-        UNIX_MILLIS(TIMESTAMP(date)) AS DateTime
+        latitude,
+        longitude,
+        CAST(eq_primary AS FLOAT64) AS magnitude,
+        CAST(focal_depth AS FLOAT64) AS depth,
+        UNIX_MILLIS(TIMESTAMP(DATETIME(year, COALESCE(month, 1), COALESCE(day, 1), COALESCE(hour, 0), COALESCE(minute, 0), CAST(COALESCE(second, 0) AS INT64)))) AS datetime
       FROM \`bigquery-public-data.noaa_significant_earthquakes.earthquakes\`
       WHERE latitude IS NOT NULL
         AND longitude IS NOT NULL
-        AND magnitude IS NOT NULL
-      ORDER BY date DESC
+        AND eq_primary IS NOT NULL
+        AND year >= 1
+      ORDER BY year DESC, month DESC, day DESC
       LIMIT @limit
     `, {
       params: { limit },
